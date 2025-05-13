@@ -18,7 +18,8 @@ class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
         print("human is 0,share is 1")
-        x=input()
+        #x=input()
+        x="1"
         # self.vibration = rospy.Publisher('joy/set_feedback',JoyFeedbackArray,queue_size=1)
         if x=="0":
             self.velocity_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
@@ -81,7 +82,7 @@ efficient = 0.6 # 角度增益
 ''' robot position '''
 turtle = robot()
 turtle.callback(data) #without this, getting error
-
+lt_initialized = False
 
 ''' main '''
 if __name__ == '__main__':
@@ -96,7 +97,7 @@ if __name__ == '__main__':
              vel_msg.angular.z=turtle.angular*0.2
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
-             p=subprocess.Popen('rostopic pub /reset std_msgs/Empty "{}"',shell=True)
+             p=subprocess.Popen('rostopic pub /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
              time.sleep(2)
              p.terminate()
         elif turtle.lb==1:
@@ -108,9 +109,15 @@ if __name__ == '__main__':
 
         # elif turtle.one==1:#quick
         # elif turtle.lt>0 and turtle.linear>0:
-        elif turtle.lt>0:
-            vel_msg.linear.x=turtle.lt/2*0.2
+        elif turtle.lt>0.005:
+            vel_msg.linear.x=turtle.lt*0.1
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
+            if not lt_initialized:
+                if turtle.lt==1.0:
+                    vel_msg.linear.x=0.0
+                else:
+                    lt_initialized = True
+            # print(turtle.lt)
         # elif turtle.linear>0.01 or turtle.linear<-0.01:
         elif turtle.linear>0.018 or turtle.linear<-0.018:
              vel_msg.linear.x=turtle.linear*0.2
@@ -119,7 +126,9 @@ if __name__ == '__main__':
         else:
             vel_msg.linear.x=0.0
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
+        if vel_msg.angular.z == 0.0 and str(vel_msg.angular.z) == '-0.0' :
+            vel_msg.angular.z=0.0
+
         turtle.moving(vel_msg)
-    # turtle.vib(feedback)   #test vibration 
 
     turtle.rate.sleep()
