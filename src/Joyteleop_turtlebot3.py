@@ -5,7 +5,7 @@ import roslib
 import subprocess
 import time
 from geometry_msgs.msg  import Twist
-from sensor_msgs.msg import Joy,JoyFeedbackArray,JoyFeedback
+from sensor_msgs.msg import Joy
 import sys
 import signal
 
@@ -18,8 +18,8 @@ class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
         print("human is 0,share is 1")
-        #x=input()
-        x="1"
+        x=input()
+        #x="1"
         # self.vibration = rospy.Publisher('joy/set_feedback',JoyFeedbackArray,queue_size=1)
         if x=="0":
             self.velocity_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
@@ -97,7 +97,7 @@ if __name__ == '__main__':
              vel_msg.angular.z=turtle.angular*0.2
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
-             p=subprocess.Popen('rostopic pub /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
+             p=subprocess.Popen('rostopic pub -r 10 /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
              time.sleep(2)
              p.terminate()
         elif turtle.lb==1:
@@ -107,8 +107,6 @@ if __name__ == '__main__':
             vel_msg.angular.z=-1
             vel_msg.linear.x=turtle.linear*0.2
 
-        # elif turtle.one==1:#quick
-        # elif turtle.lt>0 and turtle.linear>0:
         elif turtle.lt>0.005:
             vel_msg.linear.x=turtle.lt*0.1
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
