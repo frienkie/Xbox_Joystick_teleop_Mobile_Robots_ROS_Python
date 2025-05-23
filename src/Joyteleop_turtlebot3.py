@@ -5,7 +5,7 @@ import roslib
 import subprocess
 import time
 from geometry_msgs.msg  import Twist
-from sensor_msgs.msg import Joy,JoyFeedbackArray,JoyFeedback
+from sensor_msgs.msg import Joy
 import sys
 import signal
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
              vel_msg.angular.z=turtle.angular*0.2
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
-             p=subprocess.Popen('rostopic pub /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
+             p=subprocess.Popen('rostopic pub -r 10 /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
              time.sleep(2)
              p.terminate()
         elif turtle.lb==1:
@@ -107,10 +107,8 @@ if __name__ == '__main__':
             vel_msg.angular.z=-1
             vel_msg.linear.x=turtle.linear*0.2
 
-        elif turtle.linear>0.018 or turtle.linear<-0.018:
-             vel_msg.linear.x=turtle.linear*0.2
-             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
-
+        # elif turtle.one==1:#quick
+        # elif turtle.lt>0 and turtle.linear>0:
         elif turtle.lt>0.005:
             vel_msg.linear.x=turtle.lt*0.1
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
