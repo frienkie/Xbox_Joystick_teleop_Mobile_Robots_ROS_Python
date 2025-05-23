@@ -18,8 +18,8 @@ class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
         print("human is 0,share is 1")
-        #x=input()
-        x="1"
+        x=input()
+        #x="1"
         # self.vibration = rospy.Publisher('joy/set_feedback',JoyFeedbackArray,queue_size=1)
         if x=="0":
             self.velocity_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
@@ -107,8 +107,10 @@ if __name__ == '__main__':
             vel_msg.angular.z=-1
             vel_msg.linear.x=turtle.linear*0.2
 
-        # elif turtle.one==1:#quick
-        # elif turtle.lt>0 and turtle.linear>0:
+        elif turtle.linear>0.018 or turtle.linear<-0.018:
+             vel_msg.linear.x=turtle.linear*0.2
+             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
+
         elif turtle.lt>0.005:
             vel_msg.linear.x=turtle.lt*0.1
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
@@ -117,12 +119,7 @@ if __name__ == '__main__':
                     vel_msg.linear.x=0.0
                 else:
                     lt_initialized = True
-            # print(turtle.lt)
-        # elif turtle.linear>0.01 or turtle.linear<-0.01:
-        elif turtle.linear>0.018 or turtle.linear<-0.018:
-             vel_msg.linear.x=turtle.linear*0.2
-             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
-        
+
         else:
             vel_msg.linear.x=0.0
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
