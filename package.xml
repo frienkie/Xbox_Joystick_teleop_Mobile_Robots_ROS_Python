@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>xbox_joystick_teleop_mobile_robots_ros_python</name>
+  <name>xbox</name>
   <version>0.0.0</version>
   <description>ROS teleoperation package for mobile robots using a Microsoft Xbox controller</description>
 
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/ps4</url> -->
+  <!-- <url type="website">http://wiki.ros.org/xbox</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
