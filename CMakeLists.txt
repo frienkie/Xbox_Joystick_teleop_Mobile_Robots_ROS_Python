@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(ps4)
+project(xbox_joystick_teleop_mobile_robots_ros_python)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -43,7 +43,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add "message_runtime" and every package in MSG_DEP_SET to
 ##     catkin_package(CATKIN_DEPENDS ...)
 ##   * uncomment the add_*_files sections below as needed
-##     and list every .msg/.srv/.action file to be processed
+##   * and list every .msg/.srv/.action file to be processed
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
@@ -86,7 +86,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add "dynamic_reconfigure" to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
+##   * and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ps4
+#  LIBRARIES xbox_joystick_teleop_mobile_robots_ros_python
 #  CATKIN_DEPENDS geometry_msgs roslib rospy sensor_msgs
 #  DEPENDS system_lib
 )
