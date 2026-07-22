@@ -108,7 +108,7 @@ if __name__ == '__main__':
             vel_msg.angular.z=-1
             vel_msg.linear.x=turtle.linear*vel_max
         
-        elif turtle.linear>0.005 or turtle.linear<-0.005:
+        elif turtle.linear>0.006 or turtle.linear<-0.006:
             vel_msg.linear.x=turtle.linear*vel_max
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         # elif turtle.one==1:#quick
@@ -117,7 +117,7 @@ if __name__ == '__main__':
             vel_msg.linear.x=turtle.lt*vel_max*0.5
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
             if not lt_initialized:
-                if turtle.lt>0.995 and turtle.lt<0.105:
+                if turtle.lt>0.995 and turtle.lt<1.005:
                     vel_msg.linear.x=0.0
                 else:
                     lt_initialized = True
@@ -127,7 +127,6 @@ if __name__ == '__main__':
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         if vel_msg.angular.z == 0.0 and str(vel_msg.angular.z) == '-0.0' :
             vel_msg.angular.z=0.0
-
         turtle.moving(vel_msg)
 
     turtle.rate.sleep()
