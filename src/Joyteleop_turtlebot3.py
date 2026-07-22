@@ -77,6 +77,7 @@ class robot():
 data=Joy()
 vel_msg=Twist()
 efficient = 0.6 # 角度增益
+vel_max = 0.2 # 最大线速度
 
 
 ''' robot position '''
@@ -93,8 +94,8 @@ if __name__ == '__main__':
              vel_msg.angular.z=0
              
         elif turtle.nemo==1:#slow
-             vel_msg.linear.x=turtle.linear*0.1
-             vel_msg.angular.z=turtle.angular*0.2
+             vel_msg.linear.x=turtle.linear*vel_max*0.5
+             vel_msg.angular.z=turtle.angular*efficient
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
              p=subprocess.Popen('rostopic pub -r 10 /mobile_base/commands/reset_odometry std_msgs/Empty "{}"',shell=True)
@@ -102,22 +103,25 @@ if __name__ == '__main__':
              p.terminate()
         elif turtle.lb==1:
             vel_msg.angular.z=1
-            vel_msg.linear.x=turtle.linear*0.2
+            vel_msg.linear.x=turtle.linear*vel_max
         elif turtle.rb==1:
             vel_msg.angular.z=-1
-            vel_msg.linear.x=turtle.linear*0.2
-
+            vel_msg.linear.x=turtle.linear*vel_max
+        
+        elif turtle.linear>0.005 or turtle.linear<-0.005:
+            vel_msg.linear.x=turtle.linear*vel_max
+            vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         # elif turtle.one==1:#quick
         # elif turtle.lt>0 and turtle.linear>0:
         elif turtle.lt>0.005:
-            vel_msg.linear.x=turtle.lt*0.1
+            vel_msg.linear.x=turtle.lt*vel_max*0.5
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
             if not lt_initialized:
-                if turtle.lt==1.0:
+                if turtle.lt>0.995 and turtle.lt<0.105:
                     vel_msg.linear.x=0.0
                 else:
                     lt_initialized = True
-
+                    
         else:
             vel_msg.linear.x=0.0
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
